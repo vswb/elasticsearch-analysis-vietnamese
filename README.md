@@ -10,7 +10,7 @@ The plugin provides `vi_analyzer` analyzer, `vi_tokenizer` tokenizer and `vi_sto
 ## HOTFIXES
 
 ```
-sudo chown -R 1000:1000 ./dockers/elasticsearch/data   <<<< fix quyền docker quan trọng!
+sudo chown -R 1000:1000 ./docker/elasticsearch/data   <<<< fix quyền docker quan trọng!
 docker compose up --build hoặc docker compose up -d --build --pull always --remove-orphans : khi cần Dockerfile chạy lại, để build lại!
 ```
 

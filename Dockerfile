@@ -11,16 +11,10 @@ RUN apt-get update -y && apt-get install -y make cmake pkg-config wget git
 ENV JAVA_HOME=/usr/share/elasticsearch/jdk
 ENV PATH=$JAVA_HOME/bin:$PATH
 
-RUN git config --global http.postBuffer 1048576000
-RUN git config --global core.compression 9
-RUN git config --global http.lowSpeedLimit 0
-RUN git config --global http.lowSpeedTime 999999
-
 # Build coccoc-tokenizer
 RUN echo "Build coccoc-tokenizer..."
 WORKDIR /tmp
-RUN git clone https://github.com/duydo/coccoc-tokenizer.git
-
+RUN git clone https://github.com/vswb//coccoc-tokenizer.git
 RUN mkdir /tmp/coccoc-tokenizer/build
 WORKDIR /tmp/coccoc-tokenizer/build
 RUN cmake -DBUILD_JAVA=1 ..
@@ -49,9 +43,3 @@ COPY --from=builder $COCCOC_INSTALL_PATH/lib/libcoccoc_tokenizer_jni.so /usr/lib
 COPY --from=builder $COCCOC_DICT_PATH $COCCOC_DICT_PATH
 COPY --from=builder /tmp/elasticsearch-analysis-vietnamese/target/releases/elasticsearch-analysis-vietnamese-$ES_VERSION.zip /
 RUN echo "Y" | /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch file:///elasticsearch-analysis-vietnamese-$ES_VERSION.zip
-
-# https://github.com/elastic/elasticsearch-analysis-icu
-# https://github.com/elastic/elasticsearch-analysis-phonetic
-RUN \
-    elasticsearch-plugin install analysis-icu && \
-    elasticsearch-plugin install analysis-phonetic
