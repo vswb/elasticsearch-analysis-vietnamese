@@ -21,6 +21,7 @@ RUN cmake -DBUILD_JAVA=1 ..
 RUN make install
 
 # Build analysis-vietnamese
+# https://duydo.me/how-to-build-elasticsearch-vietnamese-analysis-plugin/
 RUN echo "Build analysis-vietnamese..."
 WORKDIR /tmp
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz \
@@ -44,9 +45,14 @@ COPY --from=builder $COCCOC_DICT_PATH $COCCOC_DICT_PATH
 COPY --from=builder /tmp/elasticsearch-analysis-vietnamese/target/releases/elasticsearch-analysis-vietnamese-$ES_VERSION.zip /
 RUN echo "Y" | /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch file:///elasticsearch-analysis-vietnamese-$ES_VERSION.zip
 
-# Build analysis-vietnamese
-RUN echo "Build analysis-icu & analysis-phonetic ..."
+
+
 # https://github.com/elastic/elasticsearch-analysis-icu
-# https://github.com/elastic/elasticsearch-analysis-phonetic
+# Adds extended Unicode support using the ICU libraries, including better analysis of Asian languages, Unicode normalization, 
+# Unicode-aware case folding, collation support, and transliteration
+RUN echo "Build analysis-icu ..."
 RUN echo "Y" | /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+
+# https://github.com/elastic/elasticsearch-analysis-phonetic
+RUN echo "Build analysis-phonetic ..."
 RUN echo "Y" | /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-phonetic
