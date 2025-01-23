@@ -43,3 +43,9 @@ COPY --from=builder $COCCOC_INSTALL_PATH/lib/libcoccoc_tokenizer_jni.so /usr/lib
 COPY --from=builder $COCCOC_DICT_PATH $COCCOC_DICT_PATH
 COPY --from=builder /tmp/elasticsearch-analysis-vietnamese/target/releases/elasticsearch-analysis-vietnamese-$ES_VERSION.zip /
 RUN echo "Y" | /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch file:///elasticsearch-analysis-vietnamese-$ES_VERSION.zip
+
+# https://github.com/elastic/elasticsearch-analysis-icu
+# https://github.com/elastic/elasticsearch-analysis-phonetic
+RUN \
+    elasticsearch-plugin install analysis-icu && \
+    elasticsearch-plugin install analysis-phonetic
