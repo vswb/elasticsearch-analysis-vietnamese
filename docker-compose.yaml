@@ -12,7 +12,7 @@ services:
         ES_VERSION: ${ES_VERSION}
     restart: on-failure
     ports:
-      - 9201:9200
+      - 9200:9200
     #   - 9300:9300
     volumes:
       - ./data:/usr/share/elasticsearch/data
@@ -24,7 +24,7 @@ services:
       - xpack.security.enabled=false
       - bootstrap.memory_lock=true
       - path.data=/usr/share/elasticsearch/data
-    container_name: 'pull-elasticsearch'
+    container_name: 'elasticsearch-elasticsearch'
     ulimits:
       nofile:
         soft: 65536
@@ -33,7 +33,7 @@ services:
         hard: -1
         soft: -1
     networks:
-      - pull-network
+      - elasticsearch-network
       
   # kibana:
   #   container_name: kb-container
@@ -48,5 +48,5 @@ services:
   #     - 5601:5601
 
 networks:
-  pull-network:
+  elasticsearch-network:
     driver: bridge
