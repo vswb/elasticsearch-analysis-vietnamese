@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.elasticsearch</groupId>
     <artifactId>elasticsearch-analysis-vietnamese</artifactId>
-    <version>8.7.0</version>
+    <version>${projectVersion}</version>
     <packaging>jar</packaging>
     <name>elasticsearch-analysis-vietnamese</name>
-    <url>https://github.com/vswb/elasticsearch-analysis-vietnamese/</url>
+    <url>https://github.com/duydo/elasticsearch-analysis-vietnamese/</url>
     <description>Elasticsearch Vietnamese Analysis Plugin</description>
     <inceptionYear>2014</inceptionYear>
     <licenses>
@@ -24,9 +24,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git@github.com:vswb/elasticsearch-analysis-vietnamese.git</connection>
-        <developerConnection>scm:git:git@github.com:vswb/elasticsearch-analysis-vietnamese.git</developerConnection>
-        <url>http://github.com/vswb/elasticsearch-analysis-vietnamese</url>
+        <connection>scm:git:git@github.com:duydo/elasticsearch-analysis-vietnamese.git</connection>
+        <developerConnection>scm:git:git@github.com:duydo/elasticsearch-analysis-vietnamese.git</developerConnection>
+        <url>http://github.com/duydo/elasticsearch-analysis-vietnamese</url>
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

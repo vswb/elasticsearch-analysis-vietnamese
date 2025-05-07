@@ -11,17 +11,23 @@ RUN apt-get update -y && apt-get install -y make cmake pkg-config wget git
 ENV JAVA_HOME=/usr/share/elasticsearch/jdk
 ENV PATH=$JAVA_HOME/bin:$PATH
 
+RUN git config --global http.postBuffer 1048576000
+RUN git config --global core.compression 9
+RUN git config --global http.lowSpeedLimit 0
+RUN git config --global http.lowSpeedTime 999999
+
 # Build coccoc-tokenizer
 RUN echo "Build coccoc-tokenizer..."
 WORKDIR /tmp
-RUN git clone https://github.com/vswb//coccoc-tokenizer.git
+RUN git clone https://github.com/duydo/coccoc-tokenizer.git
+
 RUN mkdir /tmp/coccoc-tokenizer/build
 WORKDIR /tmp/coccoc-tokenizer/build
 RUN cmake -DBUILD_JAVA=1 ..
 RUN make install
 
 # Build analysis-vietnamese
-RUN echo "Build analysis-vietnamese..."
+RUN echo "analysis-vietnamese..."
 WORKDIR /tmp
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz \
     && tar xvf apache-maven-3.8.8-bin.tar.gz
@@ -44,9 +50,8 @@ COPY --from=builder $COCCOC_DICT_PATH $COCCOC_DICT_PATH
 COPY --from=builder /tmp/elasticsearch-analysis-vietnamese/target/releases/elasticsearch-analysis-vietnamese-$ES_VERSION.zip /
 RUN echo "Y" | /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch file:///elasticsearch-analysis-vietnamese-$ES_VERSION.zip
 
-# Build analysis-vietnamese
-RUN echo "Build analysis-icu & analysis-phonetic ..."
 # https://github.com/elastic/elasticsearch-analysis-icu
 # https://github.com/elastic/elasticsearch-analysis-phonetic
-RUN echo "Y" | /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
-RUN echo "Y" | /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-phonetic
+RUN \
+    elasticsearch-plugin install analysis-icu && \
+    elasticsearch-plugin install analysis-phonetic

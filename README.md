@@ -7,13 +7,6 @@ CocCoc team for their Search Engine and Ads systems.
 
 The plugin provides `vi_analyzer` analyzer, `vi_tokenizer` tokenizer and `vi_stop` stop filter. The `vi_analyzer` is composed of the `vi_tokenizer` tokenizer, `stop` and `lowercase` filter.
 
-## HOTFIXES
-
-```
-sudo chown -R 1000:1000 ./data   <<<< fix quyền docker quan trọng!
-docker compose up --build hoặc docker compose up -d --build --pull always --remove-orphans : khi cần Dockerfile chạy lại, để build lại!
-```
-
 ## Example output
 
 ```
